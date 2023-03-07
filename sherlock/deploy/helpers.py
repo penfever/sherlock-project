@@ -25,7 +25,7 @@ def categorize_features(path="../") -> dict:
     return feature_cols_dict
 
 
-def _get_categorical_label_encodings(y_train, y_val, model_id: str) -> (list, list):
+def _get_categorical_label_encodings(y_train, y_val, model_id: str, path="../") -> (list, list):
     """Encode semantic type string labels as categoricals.
 
     Parameters
@@ -52,7 +52,7 @@ def _get_categorical_label_encodings(y_train, y_val, model_id: str) -> (list, li
     encoder = LabelEncoder()
     encoder.fit(y_train)
 
-    np.save(f"../model_files/classes_{model_id}.npy", encoder.classes_)
+    np.save(f"{path}model_files/classes_{model_id}.npy", encoder.classes_)
 
     # Convert train labels
     y_train_int = encoder.transform(y_train)
@@ -65,7 +65,7 @@ def _get_categorical_label_encodings(y_train, y_val, model_id: str) -> (list, li
     return y_train_cat, y_val_cat
 
 
-def _proba_to_classes(y_pred, model_id: str = "sherlock") -> np.array:
+def _proba_to_classes(y_pred, model_id: str = "sherlock", path="../") -> np.array:
     """Get predicted semantic types from prediction vectors.
 
     Parameters
@@ -83,7 +83,7 @@ def _proba_to_classes(y_pred, model_id: str = "sherlock") -> np.array:
     y_pred_int = np.argmax(y_pred, axis=1)
     encoder = LabelEncoder()
     encoder.classes_ = np.load(
-        f"../model_files/classes_{model_id}.npy", allow_pickle=True
+        f"{path}model_files/classes_{model_id}.npy", allow_pickle=True
     )
 
     y_pred = encoder.inverse_transform(y_pred_int)
