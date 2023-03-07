@@ -19,12 +19,12 @@ from sherlock.deploy import helpers
 
 
 class SherlockModel:
-    def __init__(self):
+    def __init__(self, path="../model_files/"):
         self.lamb = 0.0001
         self.do = 0.35
         self.lr = 0.0001
 
-        self.model_files_directory = "../model_files/"
+        self.model_files_directory = path
 
     def fit(
         self, X_train: pd.DataFrame, y_train, X_val: pd.DataFrame, y_val, model_id: str
