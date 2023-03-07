@@ -5,7 +5,7 @@ import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 
 
-def categorize_features() -> dict:
+def categorize_features(path="../") -> dict:
     """Get feature identifiers per feature set, to map features to feature sets.
 
     Returns
@@ -16,7 +16,7 @@ def categorize_features() -> dict:
     feature_cols_dict = {}
     for feature_set in ["char", "word", "par", "rest"]:
         feature_cols_dict[feature_set] = pd.read_csv(
-            f"../sherlock/features/feature_column_identifiers/{feature_set}_col.tsv",
+            f"{path}sherlock/features/feature_column_identifiers/{feature_set}_col.tsv",
             sep="\t",
             index_col=0,
             header=None,

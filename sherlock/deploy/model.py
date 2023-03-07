@@ -19,7 +19,7 @@ from sherlock.deploy import helpers
 
 
 class SherlockModel:
-    def __init__(self, path="../model_files/"):
+    def __init__(self, path="../"):
         self.lamb = 0.0001
         self.do = 0.35
         self.lr = 0.0001
@@ -38,7 +38,7 @@ class SherlockModel:
         encoder = LabelEncoder()
         encoder.fit(y_train)
 
-        feature_cols = helpers.categorize_features()
+        feature_cols = helpers.categorize_features(self.model_files_directory)
 
         X_train_char = X_train[feature_cols["char"]]
         X_train_word = X_train[feature_cols["word"]]
@@ -136,7 +136,7 @@ class SherlockModel:
         -------
         Array with predictions for X.
         """
-        feature_cols_dict = helpers.categorize_features()
+        feature_cols_dict = helpers.categorize_features(self.model_files_directory)
 
         y_pred = self.model.predict(
             [
@@ -165,10 +165,9 @@ class SherlockModel:
         # callbacks = [EarlyStopping(monitor="val_loss", patience=5)]
 
         model_filename = os.path.join(
-            self.model_files_directory, f"{model_id}_model.json"
+            self.model_files_directory, f"model_files/{model_id}_model.json"
         )
         if not os.path.exists(model_filename):
-            print(os.getcwd())
             raise ValueError(
                 f"""
                 No model file associated with this ID: {model_id}, was found.
@@ -182,7 +181,7 @@ class SherlockModel:
 
         if with_weights:
             weights_filename = os.path.join(
-                self.model_files_directory, f"{model_id}_weights.h5"
+                self.model_files_directory, f"model_files/{model_id}_weights.h5"
             )
             if not os.path.exists(weights_filename):
                 raise ValueError(
@@ -208,7 +207,7 @@ class SherlockModel:
             )
 
         weights_filename = os.path.join(
-            self.model_files_directory, f"{model_id}_weights.h5"
+            self.model_files_directory, f"model_files/{model_id}_weights.h5"
         )
 
         self.model.save_weights(weights_filename)
