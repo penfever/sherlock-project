@@ -53,7 +53,7 @@ def tagcol_paragraph_embeddings_features(train_data: pd.Series, train_labels: li
 # Input: returned tagged document collection from tagcol_paragraph_embeddings_features
 # Output: a stored retrained model
 # Only needed for training.
-def train_paragraph_embeddings_features(columns, dim):
+def train_paragraph_embeddings_features(columns, dim, path="../sherlock/features/"):
     # Train Doc2Vec model
     train_model = Doc2Vec(
         columns,
@@ -67,7 +67,7 @@ def train_paragraph_embeddings_features(columns, dim):
     )
 
     # Save trained model
-    model_file = f"../sherlock/features/par_vec_trained_{dim}.pkl"
+    model_file = f"{path}par_vec_trained_{dim}.pkl"
 
     train_model.save(model_file)
     train_model.delete_temporary_training_data(
@@ -79,11 +79,11 @@ DIM = 400
 model: Doc2Vec
 
 
-def initialise_pretrained_model(dim):
+def initialise_pretrained_model(dim, path="../sherlock/features/"):
     start = datetime.now()
     global model
 
-    filename = f"../sherlock/features/par_vec_trained_{dim}.pkl"
+    filename = f"{path}par_vec_trained_{dim}.pkl"
 
     assert dim == DIM
 

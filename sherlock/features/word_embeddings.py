@@ -11,13 +11,13 @@ from sherlock.features.stats_helper import mode
 word_to_embedding = {}
 
 
-def initialise_word_embeddings():
+def initialise_word_embeddings(path="../sherlock/features/"):
     start = datetime.now()
 
     global word_to_embedding
 
     print("Initialising word embeddings")
-    word_vectors_f = open('../sherlock/features/glove.6B.50d.txt', encoding='utf-8')
+    word_vectors_f = open('{}glove.6B.50d.txt'.format(path), encoding='utf-8')
 
     for w in word_vectors_f:
         term, vector = w.strip().split(' ', 1)
