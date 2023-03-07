@@ -168,6 +168,7 @@ class SherlockModel:
             self.model_files_directory, f"{model_id}_model.json"
         )
         if not os.path.exists(model_filename):
+            print(os.getcwd())
             raise ValueError(
                 f"""
                 No model file associated with this ID: {model_id}, was found.
